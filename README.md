@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Koa 2 Restful Boilerplate
 
 ## Description
@@ -40,3 +41,7 @@ npm run prod
 ## License
 
 MIT &copy; [Thomas Blanc-Hector](https://github.com/jsnomad)
+=======
+# paints-backend
+Koa Restful backend of paints
+>>>>>>> 5aaf61f19086b0623f4a68a378c06c0f536c9563
