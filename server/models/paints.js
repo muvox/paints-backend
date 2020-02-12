@@ -12,7 +12,7 @@ const paintSchema = new Schema({
   },
   colorId:{
     type: String,
-    required: true
+    required: false
   },
   manufacturer:[{
     type: Schema.Types.ObjectId,
@@ -21,7 +21,7 @@ const paintSchema = new Schema({
   productCode:{
     type: String,
     required: false
-  }  
+  }
 });
 
 export default mongoose.model('Paint', paintSchema);

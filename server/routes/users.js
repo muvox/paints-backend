@@ -15,7 +15,7 @@ router.get('/', UsersControllers.find);
 
 // POST /api/cities
 // This route is protected, call POST /api/authenticate to get the token
-router.post('/', jwt, UsersControllers.add);
+router.post('/', UsersControllers.add);
 
 // GET /api/cities/id
 // This route is protected, call POST /api/authenticate to get the token

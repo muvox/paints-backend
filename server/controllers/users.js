@@ -8,7 +8,13 @@ class UsersControllers{
    * @param {ctx} Koa Context
    */
   async find(ctx) {
-    ctx.body = await User.find();
+    const users = await User.find()
+    const user = JSON.parse(JSON.stringify(users));
+
+    for(var i = 0; i < user.length; i++){
+      delete user[i].password
+    }    
+    ctx.body = user;
   }
 
   /**
@@ -37,7 +43,10 @@ class UsersControllers{
   async add(ctx) {
     try {
       const user = await new User(ctx.request.body).save();
-      ctx.body = user;
+      const userData = user.toJSON();
+      delete userData.password
+      console.log(userData)
+      ctx.body = userData;
     } catch (err) {
       ctx.throw(422);
     }
@@ -83,6 +92,7 @@ class UsersControllers{
       ctx.throw(500);
     }
   }
+
 
   /* eslint-enable no-param-reassign */
 }

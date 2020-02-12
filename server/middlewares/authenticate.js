@@ -1,3 +1,4 @@
+import passport from 'koa-passport'
 import jwt from 'jsonwebtoken';
 
 export default ctx => {
@@ -20,3 +21,30 @@ export default ctx => {
   }
   return ctx;
 };
+
+export async function authUser(ctx, next) {
+  console.log('logging in')
+  console.log(ctx)
+  return passport.authenticate('local', (err, user, info, status) => {
+    if(!user) {
+      ctx.throw(401)
+    }
+
+    const token = user.generateToken()
+
+    const response = user.toJSON()
+
+    delete response.password
+
+    ctx.body = {
+      token: jwt.sign(
+        {
+          role: 'user'
+        },
+        'YourKey'
+      ),
+      user: response
+    }
+  })(ctx, next)
+
+}
