@@ -49,14 +49,6 @@ class UsersControllers{
       const user = await new User(ctx.request.body).save();
       const userData = user.toJSON();
       delete userData.password
-      console.log(userData)
-
-      let test = auth.authUser(ctx)
-
-
-      console.log("testi")
-      console.log(test)
-
       ctx.body = userData;
     } catch (err) {
       ctx.throw(422);
