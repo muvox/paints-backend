@@ -6,6 +6,7 @@ export async function authUser(ctx, next) {
   console.log('Logging in')
 
   return passport.authenticate('local', (err, user, info, status) => {
+    console.log(ctx.request.body)
     if (!user) {
       ctx.throw(401)
     }

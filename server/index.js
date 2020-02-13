@@ -9,6 +9,7 @@ import routing from './routes';
 import { port, connexionString } from './config';
 const session = require('koa-session');
 const redisStore = require('koa-redis')
+const cors = require('@koa/cors');
 
 mongoose.connect(connexionString, { useNewUrlParser: true });
 mongoose.connection.on('error', console.error);
@@ -20,6 +21,7 @@ app
   .use(logger())
   .use(bodyParser())
   .use(helmet())
+  .use(cors())
 
 routing(app);
 

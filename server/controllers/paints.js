@@ -36,6 +36,7 @@ class PaintsControllers {
    */
   async add(ctx) {
     try {
+      console.log(ctx.request.body)
       const paint = await new Paint(ctx.request.body).save();
       ctx.body = paint;
     } catch (err) {

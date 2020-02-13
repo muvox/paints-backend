@@ -1,4 +1,6 @@
 import User from '../models/users';
+import passport from 'koa-passport';
+import * as auth from '../middlewares/auth';
 
 class UsersControllers{
   /* eslint-disable no-param-reassign */
@@ -13,7 +15,7 @@ class UsersControllers{
 
     for(var i = 0; i < user.length; i++){
       delete user[i].password
-    }    
+    }
     ctx.body = user;
   }
 
@@ -23,11 +25,13 @@ class UsersControllers{
    */
   async findById(ctx) {
     try {
-      const city = await User.findById(ctx.params.id);
+      const user = await User.findById(ctx.params.id);
       if (!user) {
         ctx.throw(404);
       }
-      ctx.body = user;
+      ctx.body = {
+        user: user
+      }
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404);
@@ -46,6 +50,13 @@ class UsersControllers{
       const userData = user.toJSON();
       delete userData.password
       console.log(userData)
+
+      let test = auth.authUser(ctx)
+
+
+      console.log("testi")
+      console.log(test)
+
       ctx.body = userData;
     } catch (err) {
       ctx.throw(422);

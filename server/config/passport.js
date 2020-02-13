@@ -21,12 +21,12 @@ passport.deserializeUser(async (id, done) => {
 })
 
 passport.use('local', new Strategy({
-  usernameField: 'username',
+  usernameField: 'email',
   passwordField: 'password'
-}, async (username, password, done) => {
+}, async (email, password, done) => {
   try {
-    username = username.toLowerCase().trim()
-    const user = await User.findOne({ username, suspended: { $in: [null, false] } })
+    email = email.toLowerCase().trim()
+    const user = await User.findOne({ email, suspended: { $in: [null, false] } })
 
     // Require user AND a non-suspended account associated with the user
     if (!user) {
