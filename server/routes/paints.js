@@ -3,6 +3,8 @@ import Router from 'koa-router';
 import { baseApi } from '../config';
 import jwt from '../middlewares/jwt';
 import PaintsControllers from '../controllers/paints';
+import passport from 'koa-passport';
+import User from '../models/users';
 
 const api = 'paints';
 
@@ -15,7 +17,7 @@ router.get('/', PaintsControllers.find);
 
 // POST /api/paints
 // This route is protected, call POST /api/authenticate to get the token
-router.post('/', jwt, PaintsControllers.add);
+router.post('/', passport.authenticate('JWT') , PaintsControllers.add);
 
 // GET /api/paints/id
 // This route is protected, call POST /api/authenticate to get the token

@@ -1,6 +1,11 @@
 import passport from 'koa-passport'
 import User from '../models/users'
 import { Strategy } from 'passport-local'
+import config from '../config'
+const passportJWT = require("passport-jwt")
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id)
@@ -47,4 +52,23 @@ passport.use('local', new Strategy({
     console.error(err)
     return done(err)
   }
+}))
+
+const opts = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey : config.token
+}
+
+passport.use('JWT', new JWTStrategy(opts, (jwt_payload, done) => {
+  console.log(jwt_payload)
+  User.findById(jwt_payload.id, function(err, user) {
+    if( err) {
+      return done(err, false);
+    }
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
+  })
 }))

@@ -7,6 +7,8 @@ import mongoose from 'mongoose';
 import helmet from 'koa-helmet';
 import routing from './routes';
 import { port, connexionString } from './config';
+const session = require('koa-session');
+const redisStore = require('koa-redis')
 
 mongoose.connect(connexionString, { useNewUrlParser: true });
 mongoose.connection.on('error', console.error);
