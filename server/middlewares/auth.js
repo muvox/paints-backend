@@ -5,12 +5,12 @@ export async function authUser(ctx, next) {
 
   console.log('Logging in')
 
+
+
   return passport.authenticate('local', (err, user, info, status) => {
-    console.log(ctx.request.body)
     if (!user) {
       ctx.throw(401)
     }
-
     const token = user.generateToken()
 
     const response = user.toJSON()
@@ -18,7 +18,7 @@ export async function authUser(ctx, next) {
     delete response.password
 
     ctx.body = {
-      token,
+      token: token,
       user: response,
       // ownedAccounts: ownership
     }

@@ -49,7 +49,7 @@ class UsersControllers{
       const user = await new User(ctx.request.body).save();
       const userData = user.toJSON();
       delete userData.password
-      ctx.body = userData;
+      ctx.body = { user : userData }
     } catch (err) {
       ctx.throw(422);
     }

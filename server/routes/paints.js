@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import Router from 'koa-router';
+import Router from '@koa/router';
 import { baseApi } from '../config';
 import jwt from '../middlewares/jwt';
 import PaintsControllers from '../controllers/paints';

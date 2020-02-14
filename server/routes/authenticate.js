@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import Router from 'koa-router';
+import Router from '@koa/router';
 import { baseApi } from '../config';
 import authenticate from '../middlewares/authenticate';
 import * as auth from '../middlewares/auth';

@@ -30,7 +30,7 @@ passport.use('local', new Strategy({
 
     // Require user AND a non-suspended account associated with the user
     if (!user) {
-      console.log('Logging in failed (no user found)', username)
+      console.log('Logging in failed (no user found)', email)
       return done(null, false)
     }
 
