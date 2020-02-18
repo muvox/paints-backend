@@ -7,18 +7,22 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
 
-passport.serializeUser((user, done) => {
-  done(null, user.id)
-})
+// passport.serializeUser((user, done) => {
+//   done(null, user.id)
+// })
+//
+// passport.deserializeUser(async (id, done) => {
+//   try {
+//     const user = await User.findById(id, '-password')
+//     done(null, user)
+//   } catch (err) {
+//     done(err)
+//   }
+// })
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id, '-password')
-    done(null, user)
-  } catch (err) {
-    done(err)
-  }
-})
+passport.serializeUser(User.serializeUser())
+
+passport.deserializeUser(User.deserializeUser())
 
 passport.use('local', new Strategy({
   usernameField: 'email',
@@ -33,10 +37,6 @@ passport.use('local', new Strategy({
       console.log('Logging in failed (no user found)', email)
       return done(null, false)
     }
-
-
-
-
     try {
       const isMatch = await user.validatePassword(password)
 

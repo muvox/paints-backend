@@ -3,6 +3,7 @@ import Router from '@koa/router';
 import { baseApi } from '../config';
 import jwt from '../middlewares/jwt';
 import UsersControllers from '../controllers/users';
+import ProfilesControllers from '../controllers/profiles'
 import * as auth from '../middlewares/auth'
 import compose from 'koa-compose';
 
@@ -29,6 +30,10 @@ router.post('/', async (ctx, next) => {
     next();
   });
 
+router.get('/profile', async (ctx, next) => {
+  await ProfilesControllers.findProfileById(ctx, next);
+  next();
+})
 
 // router.get('/users/:id', (ctx, next) => {
 //     return User.findOne(ctx.params.id).then(function(user) {

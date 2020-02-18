@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt'
 import config from '../config'
 import jwt from 'jsonwebtoken';
-
+let passportLocalMongoose = require('passport-local-mongoose');
 
 const { Schema } = mongoose;
 
@@ -11,9 +11,18 @@ mongoose.Promise = global.Promise;
 
 const User = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
+  name: { type: String, required: false, default: 'noname'},
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true, trim: true },
   suspended: { type: Boolean, default: false },
+  role: { type: String, enum: ['user', 'admin'], default: 'user'},
+  verification: { type: String },
+  verified: { type: Boolean, default: false },
+  country: { type: String }
+},
+{
+  versionKey: false,
+  timestamps: true
 })
 
 User.pre('save', function preSave(next) {
@@ -63,8 +72,9 @@ User.pre('save', function preSave(next) {
       resolve(isMatch)
     })
   })
+
 }
 
-
+User.plugin(passportLocalMongoose)
 
 export default mongoose.model('User', User);
