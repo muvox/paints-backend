@@ -3,7 +3,7 @@ import Router from '@koa/router';
 import { baseApi } from '../config';
 import jwt from '../middlewares/jwt';
 import UsersControllers from '../controllers/users';
-import ProfilesControllers from '../controllers/profiles'
+import ProfilesControllers from '../controllers/profiles';
 import * as auth from '../middlewares/auth'
 import compose from 'koa-compose';
 
@@ -21,7 +21,7 @@ router.get('/', UsersControllers.find);
 /*router.post('/', UsersControllers.add);*/
 
 
-router.post('/', async (ctx, next) => {
+router.post('/register', async (ctx, next) => {
   await UsersControllers.add(ctx);
   next();
 },

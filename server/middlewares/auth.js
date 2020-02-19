@@ -4,9 +4,6 @@ import User from '../models/users';
 export async function authUser(ctx, next) {
 
   console.log('Logging in')
-
-
-
   return passport.authenticate('local', (err, user, info, status) => {
     if (!user) {
       ctx.throw(401)
