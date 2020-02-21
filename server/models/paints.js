@@ -14,13 +14,17 @@ const paintSchema = new Schema({
     type: String,
     required: false
   },
-  manufacturer:[{
+  manufacturer:{
     type: Schema.Types.ObjectId,
     ref: 'Manufacturer'
-  }],
+  },
   productCode:{
     type: String,
     required: false
+  },
+  reviews:{
+    type: Schema.Types.ObjectId,
+    ref: 'Review'
   }
 });
 

@@ -45,6 +45,7 @@ class UsersControllers{
    * @param {ctx} Koa Context
    */
   async add(ctx) {
+    console.log('hello?');
     try {
       const user = await new User(ctx.request.body).save();
       const userData = user.toJSON();

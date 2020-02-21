@@ -13,49 +13,38 @@ const router = new Router();
 
 router.prefix(`/${baseApi}/${api}`);
 
-// GET /api/cities
+// GET /api/users
 router.get('/', UsersControllers.find);
 
-// POST /api/cities
+// POST /api/users
 // This route is protected, call POST /api/authenticate to get the token
-/*router.post('/', UsersControllers.add);*/
-
 
 router.post('/register', async (ctx, next) => {
-  await UsersControllers.add(ctx);
-  next();
-},
+  await UsersControllers.add(ctx)
+  console.log('user registered')
+  next()
+  },
   async (ctx, next) =>{
+    console.log('authing user')
     await auth.authUser(ctx, next);
-    next();
-  });
+    next()
+  }
+)
 
 router.get('/profile', async (ctx, next) => {
   await ProfilesControllers.findProfileById(ctx, next);
   next();
 })
 
-// router.get('/users/:id', (ctx, next) => {
-//     return User.findOne(ctx.params.id).then(function(user) {
-//       ctx.user = user;
-//       next();
-//       });
-//     },
-//   ctx => {
-//     console.log(ctx.user);
-//     // => { id: 17, name: "Alex" }
-//   }
-// );
-
-// GET /api/cities/id
+// GET /api/users/id
 // This route is protected, call POST /api/authenticate to get the token
 router.get('/:id', jwt, UsersControllers.findById);
 
-// PUT /api/cities/id
+// PUT /api/users/id
 // This route is protected, call POST /api/authenticate to get the token
 router.put('/:id', jwt, UsersControllers.update);
 
-// DELETE /api/cities/id
+// DELETE /api/users/id
 // This route is protected, call POST /api/authenticate to get the token
 router.delete('/:id', jwt, UsersControllers.delete);
 

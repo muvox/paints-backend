@@ -10,6 +10,8 @@ export async function authUser(ctx, next) {
     }
     const token = user.generateToken()
 
+    console.log(token)
+
     const response = user.toJSON()
 
     delete response.password

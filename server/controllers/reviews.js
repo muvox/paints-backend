@@ -1,6 +1,6 @@
-import Paint from '../models/paints';
+import Review from '../models/reviews';
 
-class PaintsControllers {
+class ReviewsControllers {
   /* eslint-disable no-param-reassign */
 
   /**
@@ -8,20 +8,20 @@ class PaintsControllers {
    * @param {ctx} Koa Context
    */
   async find(ctx) {
-    ctx.body = await Paint.find().populate('reviews');
+    ctx.body = await Review.find().populate('reviewer', 'username').populate('productId')
   }
 
   /**
-   * Find a paint
+   * Find a review
    * @param {ctx} Koa Context
    */
   async findById(ctx) {
     try {
-      const city = await Paint.findById(ctx.params.id);
-      if (!paint) {
+      const city = await Review.findById(ctx.params.id);
+      if (!review) {
         ctx.throw(404);
       }
-      ctx.body = paint;
+      ctx.body = review;
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404);
@@ -31,33 +31,33 @@ class PaintsControllers {
   }
 
   /**
-   * Add a paint
+   * Add a review
    * @param {ctx} Koa Context
    */
   async add(ctx) {
     try {
       console.log(ctx.request.body)
-      const paint = await new Paint(ctx.request.body).save();
-      ctx.body = paint;
+      const review = await new Review(ctx.request.body).save();
+      ctx.body = review;
     } catch (err) {
       ctx.throw(422);
     }
   }
 
   /**
-   * Update a paint
+   * Update a review
    * @param {ctx} Koa Context
    */
   async update(ctx) {
     try {
-      const paint = await Paint.findByIdAndUpdate(
+      const review = await Review.findByIdAndUpdate(
         ctx.params.id,
         ctx.request.body
       );
-      if (!paint) {
+      if (!review) {
         ctx.throw(404);
       }
-      ctx.body = paint;
+      ctx.body = review;
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404);
@@ -67,16 +67,16 @@ class PaintsControllers {
   }
 
   /**
-   * Delete a paint
+   * Delete a review
    * @param {ctx} Koa Context
    */
   async delete(ctx) {
     try {
-      const paint = await paint.findByIdAndRemove(ctx.params.id);
-      if (!paint) {
+      const review = await review.findByIdAndRemove(ctx.params.id);
+      if (!review) {
         ctx.throw(404);
       }
-      ctx.body = paint;
+      ctx.body = review;
     } catch (err) {
       if (err.name === 'CastError' || err.name === 'NotFoundError') {
         ctx.throw(404);
@@ -88,4 +88,4 @@ class PaintsControllers {
   /* eslint-enable no-param-reassign */
 }
 
-export default new PaintsControllers();
+export default new ReviewsControllers();
